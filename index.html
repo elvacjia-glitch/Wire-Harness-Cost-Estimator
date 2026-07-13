@@ -907,35 +907,39 @@
       return String(value);
     }
 
+    function formatDebugCurrency(value) {
+      return `USD $${value.toFixed(4)}`;
+    }
+
     function renderDebugDetails(estimate) {
       if (!debugMode) {
         return;
       }
 
       const fields = [
-        ["gaugeFactor", estimate.gaugeFactor],
-        ["connectorPrice", estimate.connectorPrice],
-        ["materialFactor", estimate.materialFactor],
-        ["processingFactor", estimate.processingFactor],
-        ["baseMaterialCost", estimate.baseMaterialCost],
-        ["materialCost (after factor)", estimate.materialCost],
-        ["crimpPoints", estimate.crimpPoints],
-        ["processFactor", estimate.processFactor],
-        ["baseProcessingCost", estimate.baseProcessingCost],
-        ["processingCost (after factor)", estimate.processingCost],
-        ["toolingLow", estimate.toolingLow],
-        ["toolingHigh", estimate.toolingHigh],
-        ["quantityData.units", estimate.quantityUnits],
-        ["multiplier.low", estimate.multiplierLow],
-        ["multiplier.high", estimate.multiplierHigh],
-        ["lowPerUnit", estimate.lowPerUnit],
-        ["highPerUnit", estimate.highPerUnit]
+        ["gaugeFactor", estimate.gaugeFactor, false],
+        ["connectorPrice", estimate.connectorPrice, true],
+        ["materialFactor", estimate.materialFactor, false],
+        ["processingFactor", estimate.processingFactor, false],
+        ["baseMaterialCost", estimate.baseMaterialCost, true],
+        ["materialCost (after factor)", estimate.materialCost, true],
+        ["crimpPoints", estimate.crimpPoints, false],
+        ["processFactor", estimate.processFactor, false],
+        ["baseProcessingCost", estimate.baseProcessingCost, true],
+        ["processingCost (after factor)", estimate.processingCost, true],
+        ["toolingLow", estimate.toolingLow, true],
+        ["toolingHigh", estimate.toolingHigh, true],
+        ["quantityData.units", estimate.quantityUnits, false],
+        ["multiplier.low", estimate.multiplierLow, false],
+        ["multiplier.high", estimate.multiplierHigh, false],
+        ["lowPerUnit", estimate.lowPerUnit, true],
+        ["highPerUnit", estimate.highPerUnit, true]
       ];
 
-      debugGrid.innerHTML = fields.map(([label, value]) => `
+      debugGrid.innerHTML = fields.map(([label, value, isCurrency]) => `
         <div class="debug-item">
           <strong>${label}</strong>
-          <span>${formatDebugValue(value)}</span>
+          <span>${isCurrency ? formatDebugCurrency(value) : formatDebugValue(value)}</span>
         </div>
       `).join("");
 
