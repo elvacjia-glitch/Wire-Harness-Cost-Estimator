@@ -36,11 +36,8 @@
     Cost Estimator
   </text>
 
-  <text x="144" y="340" fill="#55616d" font-family="Arial, Helvetica, sans-serif" font-size="29">
-    Get a budgetary landed cost range in minutes for
-  </text>
-  <text x="144" y="380" fill="#55616d" font-family="Arial, Helvetica, sans-serif" font-size="29">
-    Industrial, Marine, Medical, Data Center, and EV projects.
+  <text x="144" y="346" fill="#55616d" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">
+    Get a Budget Range in 3 Minutes
   </text>
 
   <rect x="144" y="424" width="356" height="60" rx="30" fill="#fff3e7"/>
