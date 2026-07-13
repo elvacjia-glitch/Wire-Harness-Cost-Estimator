@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Wire Harness Cost Estimator</title>
+  <desc id="desc">Preview card for a B2B wire harness budget estimator shared on LinkedIn.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#eef2f6"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f08c33"/>
+      <stop offset="100%" stop-color="#e8761a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#1b2732" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1080" cy="110" r="180" fill="#fff2e6"/>
+  <circle cx="140" cy="540" r="170" fill="#f3f6f9"/>
+
+  <g filter="url(#shadow)">
+    <rect x="66" y="62" width="1068" height="506" rx="30" fill="url(#card)" stroke="#d8e0e8" stroke-width="3"/>
+  </g>
+
+  <rect x="104" y="110" width="12" height="384" rx="6" fill="url(#accent)"/>
+
+  <text x="144" y="188" fill="#192129" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700">
+    Wire Harness
+  </text>
+  <text x="144" y="266" fill="#192129" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700">
+    Cost Estimator
+  </text>
+
+  <text x="144" y="340" fill="#55616d" font-family="Arial, Helvetica, sans-serif" font-size="29">
+    Get a budgetary landed cost range in minutes for
+  </text>
+  <text x="144" y="380" fill="#55616d" font-family="Arial, Helvetica, sans-serif" font-size="29">
+    Industrial, Marine, Medical, Data Center, and EV projects.
+  </text>
+
+  <rect x="144" y="424" width="356" height="60" rx="30" fill="#fff3e7"/>
+  <text x="176" y="462" fill="#e8761a" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">
+    Budgetary reference only
+  </text>
+
+  <g transform="translate(760 146)">
+    <rect width="278" height="290" rx="24" fill="#ffffff" stroke="#d8e0e8" stroke-width="3"/>
+    <rect x="28" y="28" width="122" height="14" rx="7" fill="#1f2a35"/>
+    <rect x="28" y="58" width="222" height="12" rx="6" fill="#c8d1da"/>
+    <rect x="28" y="98" width="222" height="54" rx="16" fill="#f7fafc" stroke="#d8e0e8"/>
+    <rect x="28" y="166" width="102" height="54" rx="16" fill="#f7fafc" stroke="#d8e0e8"/>
+    <rect x="148" y="166" width="102" height="54" rx="16" fill="#f7fafc" stroke="#d8e0e8"/>
+    <rect x="28" y="236" width="132" height="24" rx="12" fill="url(#accent)"/>
+    <rect x="172" y="236" width="78" height="24" rx="12" fill="#1f2a35"/>
+  </g>
+
+  <text x="144" y="526" fill="#7a8794" font-family="Arial, Helvetica, sans-serif" font-size="22">
+    Built for GitHub Pages deployment and LinkedIn traffic capture.
+  </text>
+</svg>
