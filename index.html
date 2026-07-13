@@ -738,7 +738,7 @@
       companyName: "Southern Cross Industrial",
       responsePromise: "within 24 hours",
       copperCoefficient: 0.008,
-      processingRate: 0.20,
+      processingRate: 0.18,
       toolingRange: { low: 500, high: 1200 },
       fieldMultipliers: {
         industrial: { label: "Industrial Automation", low: 1.3, high: 1.6 },
@@ -765,9 +765,9 @@
         2: 11.4
       },
       connectorPrices: {
-        standard: 0.15,
-        premium: 0.35,
-        custom: 0.50
+        standard: 0.25,
+        premium: 0.65,
+        custom: 1.10
       },
       quantityTiers: {
         "1-50": { units: 25, tooling: true },
@@ -839,8 +839,12 @@
       const toolingLow = quantityData.tooling ? CONFIG.toolingRange.low : 0;
       const toolingHigh = quantityData.tooling ? CONFIG.toolingRange.high : 0;
 
-      const lowPerUnit = ((materialCost + processingCost + toolingLow) * multiplier.low) / quantityData.units;
-      const highPerUnit = ((materialCost + processingCost + toolingHigh) * multiplier.high) / quantityData.units;
+      const lowPerUnit =
+        ((materialCost + processingCost) * multiplier.low) +
+        ((toolingLow / quantityData.units) * multiplier.low);
+      const highPerUnit =
+        ((materialCost + processingCost) * multiplier.high) +
+        ((toolingHigh / quantityData.units) * multiplier.high);
 
       return {
         applicationField: multiplier.label,
