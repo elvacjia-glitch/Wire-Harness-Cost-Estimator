@@ -21,7 +21,6 @@ Medical Device
 EV High-Voltage
 Lead capture flow after result display
 Open Graph and social preview support for LinkedIn sharing
-Hidden local setup mode for Formspree configuration
 Project Structure
 index.html — complete estimator page, UI, calculator logic, and lead-capture flow
 og-preview.svg — social preview image for LinkedIn and other platforms
@@ -42,18 +41,14 @@ application-specific multiplier range
 The result is intentionally broad and should be treated as a budgeting reference only.
 
 Lead Capture Setup
-You do not need to edit the HTML file just to activate quote-request submissions.
+Lead capture is already wired directly into the page through Formspree.
 
-After the site is published, open:
+Current submission target:
 
-https://your-site-url/?setup=1
-
-Then save:
-
-your Formspree endpoint
-your business email
-your company name
-This setup is stored locally in that browser.
+Formspree endpoint: https://formspree.io/f/xvzeokba
+Business email: scglobalau@gmail.com
+Company name: Southern Cross Industrial
+If these values ever need to change, update them directly in the CONFIG object inside index.html.
 
 Deploy to GitHub Pages
 Create a new GitHub repository.
@@ -74,4 +69,4 @@ Notes
 This tool does not generate formal quotations.
 Freight is excluded by design.
 Results are intentionally shown as a range, not a single price.
-Lead submission will not work until your Formspree endpoint has been configured.
+Lead submission depends on the Formspree endpoint remaining active.
