@@ -445,6 +445,63 @@
       display: block;
     }
 
+    .debug-panel {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #192129;
+      color: #f7f9fb;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .debug-panel.active {
+      display: block;
+      animation: rise 0.35s ease-out both;
+    }
+
+    .debug-panel h4 {
+      margin: 0 0 10px;
+      font-size: 0.98rem;
+      letter-spacing: -0.01em;
+    }
+
+    .debug-panel p {
+      margin: 0 0 12px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .debug-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .debug-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .debug-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #ffd9bd;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .debug-item span {
+      display: block;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.92rem;
+      word-break: break-word;
+    }
+
     .side {
       padding: 22px;
       display: grid;
@@ -521,7 +578,8 @@
       .hero-grid,
       .form-grid,
       .checkbox-grid,
-      .lead-row {
+      .lead-row,
+      .debug-grid {
         grid-template-columns: 1fr;
       }
 
@@ -691,6 +749,12 @@
               <div id="leadError" class="error">Submission could not be completed yet. Connect your Formspree endpoint in the script before publishing so buyer requests can be forwarded to your inbox.</div>
             </form>
           </div>
+
+          <div id="debugPanel" class="debug-panel" aria-live="polite">
+            <h4>Debug Calculation Trace</h4>
+            <p>Visible only when the page is opened with <code>?debug=1</code>. These values come directly from the current calculation path.</p>
+            <div id="debugGrid" class="debug-grid"></div>
+          </div>
         </div>
       </section>
 
@@ -792,8 +856,11 @@
     const estimatedRangeField = document.getElementById("estimatedRangeField");
     const estimatedQuantityField = document.getElementById("estimatedQuantityField");
     const specialProcessingField = document.getElementById("specialProcessingField");
+    const debugPanel = document.getElementById("debugPanel");
+    const debugGrid = document.getElementById("debugGrid");
 
     let latestEstimate = null;
+    const debugMode = new URLSearchParams(window.location.search).get("debug") === "1";
 
     function formatMoney(value) {
       return `$${value.toFixed(2)}`;
@@ -801,6 +868,48 @@
 
     function getSelectedProcessing() {
       return Array.from(document.querySelectorAll('input[name="specialProcessing"]:checked')).map((item) => item.value);
+    }
+
+    function formatDebugValue(value) {
+      if (typeof value === "number") {
+        return Number.isInteger(value) ? String(value) : value.toFixed(4);
+      }
+      return String(value);
+    }
+
+    function renderDebugDetails(estimate) {
+      if (!debugMode) {
+        return;
+      }
+
+      const fields = [
+        ["gaugeFactor", estimate.gaugeFactor],
+        ["connectorPrice", estimate.connectorPrice],
+        ["materialFactor", estimate.materialFactor],
+        ["processingFactor", estimate.processingFactor],
+        ["baseMaterialCost", estimate.baseMaterialCost],
+        ["materialCost (after factor)", estimate.materialCost],
+        ["crimpPoints", estimate.crimpPoints],
+        ["processFactor", estimate.processFactor],
+        ["baseProcessingCost", estimate.baseProcessingCost],
+        ["processingCost (after factor)", estimate.processingCost],
+        ["toolingLow", estimate.toolingLow],
+        ["toolingHigh", estimate.toolingHigh],
+        ["quantityData.units", estimate.quantityUnits],
+        ["multiplier.low", estimate.multiplierLow],
+        ["multiplier.high", estimate.multiplierHigh],
+        ["lowPerUnit", estimate.lowPerUnit],
+        ["highPerUnit", estimate.highPerUnit]
+      ];
+
+      debugGrid.innerHTML = fields.map(([label, value]) => `
+        <div class="debug-item">
+          <strong>${label}</strong>
+          <span>${formatDebugValue(value)}</span>
+        </div>
+      `).join("");
+
+      debugPanel.classList.add("active");
     }
 
     function updateRuntimeCopy() {
@@ -851,6 +960,10 @@
 
       return {
         applicationField: multiplier.label,
+        gaugeFactor,
+        connectorPrice,
+        materialFactor: multiplier.materialFactor,
+        processingFactor: multiplier.processingFactor,
         wireGauge,
         conductors,
         connectorTier,
@@ -858,6 +971,9 @@
         wireLength,
         quantityTier,
         quantityUnits: quantityData.units,
+        multiplierLow: multiplier.low,
+        multiplierHigh: multiplier.high,
+        processFactor,
         selectedProcessing,
         baseMaterialCost,
         materialCost,
@@ -892,6 +1008,7 @@
       priceRange.textContent = `${formatMoney(latestEstimate.lowPerUnit)} - ${formatMoney(latestEstimate.highPerUnit)} / pcs`;
       resultSummary.textContent = `Based on ${latestEstimate.quantityUnits} units, excludes freight, for budgetary reference only.`;
       resultDetails.textContent = `${latestEstimate.applicationField} | AWG ${latestEstimate.wireGauge} | ${latestEstimate.conductors} conductors | ${connectorTierLabel(latestEstimate.connectorTier)} | ${latestEstimate.pins} pins per connector | ${latestEstimate.wireLength} m length | Processing: ${processingText}`;
+      renderDebugDetails(latestEstimate);
 
       projectSummaryField.value = resultDetails.textContent;
       estimatedRangeField.value = priceRange.textContent;
